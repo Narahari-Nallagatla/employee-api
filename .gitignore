@@ -1,0 +1,25 @@
+# Build folders
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Rider
+.idea/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Publish profiles
+*.PublishSettings
+*.pubxml.user
+
+# Secrets
+appsettings.Development.json
