@@ -13,8 +13,8 @@ namespace EmployeeApi.Services
 
         public async Task<string> UploadFileAsync(IFormFile file)
         {
-            var connectionString = _configuration["AzureBlobStorage:ConnectionString"];
-            var containerName = _configuration["AzureBlobStorage:ContainerName"];
+            var connectionString = _configuration["BlobConnectionString"];
+            var containerName = _configuration["BlobContainerName"];
 
             var blobContainerClient =
                 new BlobContainerClient(connectionString, containerName);
