@@ -1,5 +1,13 @@
-﻿namespace EmployeeApi.Models
+﻿
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace EmployeeApi.Models
 {
+    [Authorize(Roles = "Admin")]
+    [Route("api/[controller]")]
+    [ApiController]
     public class Employee
     {
         public int Id { get; set; }
