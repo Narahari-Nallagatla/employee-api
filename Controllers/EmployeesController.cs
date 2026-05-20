@@ -1,9 +1,13 @@
 ﻿using AutoMapper;
 using EmployeeApi.DTOs;
+using EmployeeApi.Helpers;
+using EmployeeApi.Interfaces;
 using EmployeeApi.Models;
-using EmployeeApi.Services;
+using EmployeeApi.Responses;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace EmployeeApi.Controllers
 {
@@ -16,10 +20,7 @@ namespace EmployeeApi.Controllers
         private readonly ILogger<EmployeesController> _logger;
         private readonly IMapper _mapper;
 
-        public EmployeesController(
-      IEmployeeService service,
-      ILogger<EmployeesController> logger,
-      IMapper mapper)
+        public EmployeesController(IEmployeeService service, ILogger<EmployeesController> logger, IMapper mapper)
         {
             _service = service;
             _logger = logger;
@@ -27,14 +28,31 @@ namespace EmployeeApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] PaginationParams pagination)
         {
-            _logger.LogInformation("GetAll called");
-            var employees = await _service.GetAll();
-            var result =
-                _mapper.Map<List<EmployeeReadDto>>(employees);
+            var employees = await _service.GetPaged(pagination.PageNumber, pagination.PageSize);
 
-            return Ok(result);
+            var totalRecords = await _service.GetCount();
+
+            var totalPages = (int)Math.Ceiling(totalRecords / (double)pagination.PageSize);
+
+            var result = _mapper.Map<List<EmployeeReadDto>>(employees);
+
+            return Ok(new PagedResponse<List<EmployeeReadDto>>
+            {
+                Success = true,
+                Message = "Employees fetched successfully",
+
+                PageNumber = pagination.PageNumber,
+
+                PageSize = pagination.PageSize,
+
+                TotalRecords = totalRecords,
+
+                TotalPages = totalPages,
+
+                Data = result
+            });
         }
 
         [HttpGet("{id}")]
@@ -51,8 +69,7 @@ namespace EmployeeApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(EmployeeCreateDto dto)
         {
-            var employee =
-                _mapper.Map<Employee>(dto);
+            var employee = _mapper.Map<Employee>(dto);
 
             await _service.Create(employee);
 
@@ -72,5 +89,48 @@ namespace EmployeeApi.Controllers
             await _service.Delete(id);
             return Ok("Deleted");
         }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> Search(string search, string sortBy = "name")
+        {
+            var employees = await _service.Search(search, sortBy);
+
+            return Ok(
+                _mapper.Map<List<EmployeeReadDto>>(employees));
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchEmployee(int id, [FromBody] JsonPatchDocument<EmployeePatchDto> patchDoc)
+        {
+            if (patchDoc == null)
+            {
+                return BadRequest();
+            }
+
+            var employee =
+                await _service.GetById(id);
+
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            var employeeDto =
+                _mapper.Map<EmployeePatchDto>(employee);
+
+            patchDoc.ApplyTo(employeeDto);
+
+            _mapper.Map(employeeDto, employee);
+
+            await _service.Update(employee);
+
+            return Ok(new ApiResponse<string>
+            {
+                Success = true,
+                Message = "Employee updated successfully",
+                Data = null
+            });
+        }
+
     }
 }

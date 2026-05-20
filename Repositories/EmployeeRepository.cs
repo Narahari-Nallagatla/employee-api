@@ -45,5 +45,35 @@ namespace EmployeeApi.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<List<Employee>> GetPagedAsync(int pageNumber, int pageSize)
+        {
+            return await _context.Employees
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+        public async Task<List<Employee>> SearchAsync(string search, string sortBy)
+        {
+            var query = _context.Employees.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(x =>
+                    x.Name.Contains(search));
+            }
+
+            query = sortBy?.ToLower() switch
+            {
+                "salary" => query.OrderBy(x => x.Salary),
+
+                _ => query.OrderBy(x => x.Name)
+            };
+
+            return await query.ToListAsync();
+        }
+        public async Task<int> GetCountAsync()
+        {
+            return await _context.Employees.CountAsync();
+        }       
     }
-}
+}   

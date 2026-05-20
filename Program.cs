@@ -5,6 +5,9 @@ using EmployeeApi.Middleware;
 using EmployeeApi.Profiles;
 using EmployeeApi.Repositories;
 using EmployeeApi.Services;
+using EmployeeApi.Validators;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +20,12 @@ using Serilog;
 IdentityModelEventSource.ShowPII = true;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new Exception("DefaultConnection is missing");
+}
+
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -31,7 +40,7 @@ Log.Information("Jwt Issuer: {Issuer}", builder.Configuration["Jwt:Issuer"]);
 
 Log.Information("Jwt Audience: {Audience}", builder.Configuration["Jwt:Audience"]);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddEndpointsApiExplorer();
 // builder.Services.AddSwaggerGen();
@@ -73,13 +82,11 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
-        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+    options.AddPolicy("AllowAll", policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+
 builder.Services.AddScoped<BlobService>();
 
 
@@ -114,13 +121,23 @@ builder.Services.AddApiVersioning(options =>
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddFluentValidationAutoValidation();
+
+builder.Services.AddValidatorsFromAssemblyContaining<EmployeeCreateDtoValidator>();
+builder.Services.AddHealthChecks().AddSqlServer(connectionString);
+
+builder.Services.AddApplicationInsightsTelemetry(
+    options =>
+    {
+        options.ConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"];
+    });
 
 var app = builder.Build();
 
 //if (app.Environment.IsDevelopment())
 //{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
 // }
 
 app.UseHttpsRedirection();
@@ -129,7 +146,7 @@ app.UseCors("AllowAll");
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.MapHealthChecks("/health");
 app.MapControllers();
 
 app.Run();

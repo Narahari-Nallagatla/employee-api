@@ -40,5 +40,17 @@ namespace EmployeeApi.Services
         {
             await _repo.DeleteAsync(id);
         }
+        public async Task<List<Employee>> GetPaged(int pageNumber, int pageSize)
+        {
+            return await _repo.GetPagedAsync(pageNumber, pageSize);
+        }
+        public async Task<List<Employee>> Search(string search, string sortBy)
+        {
+            return await _repo.SearchAsync(search, sortBy);
+        }
+        public async Task<int> GetCount()
+        {
+            return await _repo.GetCountAsync();
+        }
     }
 }

@@ -11,6 +11,10 @@ namespace EmployeeApi.Profiles
             CreateMap<Employee, EmployeeReadDto>();
 
             CreateMap<EmployeeCreateDto, Employee>();
+
+            CreateMap<Employee, EmployeePatchDto>();
+
+            CreateMap<EmployeePatchDto, Employee>();
         }
     }
 }
