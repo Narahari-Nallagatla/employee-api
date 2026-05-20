@@ -104,3 +104,104 @@ FROM [Employees] AS [e]
 2026-05-20 19:53:55.485 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi) in 46.9879ms
 2026-05-20 19:53:55.489 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
 2026-05-20 19:53:55.492 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees - 200 null application/json; charset=utf-8 73.8844ms
+2026-05-20 20:56:34.264 +05:30 [INF] Jwt Key: THIS_IS_MY_SUPER_SECRET_KEY_123456789
+2026-05-20 20:56:34.306 +05:30 [INF] Jwt Issuer: EmployeeApi
+2026-05-20 20:56:34.307 +05:30 [INF] Jwt Audience: EmployeeApiUsers
+2026-05-20 20:56:34.659 +05:30 [INF] User profile is available. Using 'C:\Users\narah\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-05-20 20:56:34.948 +05:30 [INF] Now listening on: https://localhost:7026
+2026-05-20 20:56:34.950 +05:30 [INF] Now listening on: http://localhost:5038
+2026-05-20 20:56:35.011 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-05-20 20:56:35.013 +05:30 [INF] Hosting environment: Development
+2026-05-20 20:56:35.015 +05:30 [INF] Content root path: C:\Hari\Dotnet\Sample Codes\EmployeeApi
+2026-05-20 20:56:36.146 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/swagger/index.html - null null
+2026-05-20 20:56:36.616 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/_framework/aspnetcore-browser-refresh.js - null null
+2026-05-20 20:56:36.621 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/swagger/index.html - 200 null text/html;charset=utf-8 494.1122ms
+2026-05-20 20:56:36.644 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/_framework/aspnetcore-browser-refresh.js - 200 14927 application/javascript; charset=utf-8 28.2824ms
+2026-05-20 20:56:36.674 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/_vs/browserLink - null null
+2026-05-20 20:56:36.759 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/_vs/browserLink - 200 null text/javascript; charset=UTF-8 84.959ms
+2026-05-20 20:56:36.824 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/swagger/v1/swagger.json - null null
+2026-05-20 20:56:36.847 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 23.0658ms
+2026-05-20 20:58:00.003 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7026/api/Auth/login - application/json 51
+2026-05-20 20:58:00.104 +05:30 [INF] CORS policy execution successful.
+2026-05-20 20:58:00.217 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.AuthController.Login (EmployeeApi)'
+2026-05-20 20:58:00.274 +05:30 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(EmployeeApi.DTOs.LoginDto) on controller EmployeeApi.Controllers.AuthController (EmployeeApi).
+2026-05-20 20:58:02.323 +05:30 [INF] Executed DbCommand (72ms) [Parameters=[@__login_Username_0='?' (Size = 4000), @__login_Password_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[Password], [u].[Role], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__login_Username_0 AND [u].[Password] = @__login_Password_1
+2026-05-20 20:58:02.494 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-20 20:58:02.509 +05:30 [INF] Executed action EmployeeApi.Controllers.AuthController.Login (EmployeeApi) in 2228.1072ms
+2026-05-20 20:58:02.511 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.AuthController.Login (EmployeeApi)'
+2026-05-20 20:58:02.524 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7026/api/Auth/login - 200 null application/json; charset=utf-8 2520.7782ms
+2026-05-20 20:58:27.902 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/api/Employees - null null
+2026-05-20 20:58:27.993 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-20 20:58:28.008 +05:30 [INF] Route matched with {action = "GetAll", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-20 20:58:28.139 +05:30 [INF] GetAll called
+2026-05-20 20:58:28.264 +05:30 [INF] Executed DbCommand (48ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[Department], [e].[Name], [e].[Salary]
+FROM [Employees] AS [e]
+2026-05-20 20:58:28.325 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[EmployeeApi.DTOs.EmployeeReadDto, EmployeeApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-05-20 20:58:28.333 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi) in 322.5185ms
+2026-05-20 20:58:28.336 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-20 20:58:28.340 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees - 200 null application/json; charset=utf-8 438.4171ms
+2026-05-20 20:58:57.778 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7026/api/Employees - application/json 65
+2026-05-20 20:58:57.783 +05:30 [INF] CORS policy execution successful.
+2026-05-20 20:58:57.790 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.Create (EmployeeApi)'
+2026-05-20 20:58:57.807 +05:30 [INF] Route matched with {action = "Create", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(EmployeeApi.DTOs.EmployeeCreateDto) on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-20 20:58:58.181 +05:30 [INF] Executed DbCommand (50ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (Size = 4000), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Employees] ([Department], [Name], [Salary])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2);
+2026-05-20 20:58:58.222 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2026-05-20 20:58:58.225 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.Create (EmployeeApi) in 416.7474ms
+2026-05-20 20:58:58.227 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.Create (EmployeeApi)'
+2026-05-20 20:58:58.228 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7026/api/Employees - 200 null text/plain; charset=utf-8 450.5705ms
+2026-05-20 20:59:06.061 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/api/Employees - null null
+2026-05-20 20:59:06.068 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-20 20:59:06.070 +05:30 [INF] Route matched with {action = "GetAll", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-20 20:59:06.077 +05:30 [INF] GetAll called
+2026-05-20 20:59:06.104 +05:30 [INF] Executed DbCommand (24ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[Department], [e].[Name], [e].[Salary]
+FROM [Employees] AS [e]
+2026-05-20 20:59:06.108 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[EmployeeApi.DTOs.EmployeeReadDto, EmployeeApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-05-20 20:59:06.110 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi) in 37.3492ms
+2026-05-20 20:59:06.111 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-20 20:59:06.112 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees - 200 null application/json; charset=utf-8 51.0377ms
+2026-05-20 20:59:44.575 +05:30 [INF] Request starting HTTP/2 PUT https://localhost:7026/api/Employees - application/json 72
+2026-05-20 20:59:44.580 +05:30 [INF] CORS policy execution successful.
+2026-05-20 20:59:44.582 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.Update (EmployeeApi)'
+2026-05-20 20:59:44.592 +05:30 [INF] Route matched with {action = "Update", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Update(EmployeeApi.Models.Employee) on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-20 20:59:44.648 +05:30 [INF] Executed DbCommand (41ms) [Parameters=[@p3='?' (DbType = Int32), @p0='?' (Size = 4000), @p1='?' (Size = 4000), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Employees] SET [Department] = @p0, [Name] = @p1, [Salary] = @p2
+OUTPUT 1
+WHERE [Id] = @p3;
+2026-05-20 20:59:44.654 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2026-05-20 20:59:44.657 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.Update (EmployeeApi) in 62.7903ms
+2026-05-20 20:59:44.658 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.Update (EmployeeApi)'
+2026-05-20 20:59:44.660 +05:30 [INF] Request finished HTTP/2 PUT https://localhost:7026/api/Employees - 200 null text/plain; charset=utf-8 85.2157ms
+2026-05-20 21:00:02.866 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/api/Employees - null null
+2026-05-20 21:00:02.880 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-20 21:00:02.882 +05:30 [INF] Route matched with {action = "GetAll", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-20 21:00:02.885 +05:30 [INF] GetAll called
+2026-05-20 21:00:02.913 +05:30 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[Department], [e].[Name], [e].[Salary]
+FROM [Employees] AS [e]
+2026-05-20 21:00:02.917 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[EmployeeApi.DTOs.EmployeeReadDto, EmployeeApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-05-20 21:00:02.919 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi) in 34.3872ms
+2026-05-20 21:00:02.926 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-20 21:00:02.928 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees - 200 null application/json; charset=utf-8 62.151ms
+2026-05-20 21:02:38.513 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/api/Employees/4 - null null
+2026-05-20 21:02:38.527 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.GetById (EmployeeApi)'
+2026-05-20 21:02:38.538 +05:30 [INF] Route matched with {action = "GetById", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetById(Int32) on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-20 21:02:38.653 +05:30 [INF] Executed DbCommand (27ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Department], [e].[Name], [e].[Salary]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @__p_0
+2026-05-20 21:02:38.659 +05:30 [INF] Executing OkObjectResult, writing value of type 'EmployeeApi.Models.Employee'.
+2026-05-20 21:02:38.666 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.GetById (EmployeeApi) in 122.5404ms
+2026-05-20 21:02:38.669 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.GetById (EmployeeApi)'
+2026-05-20 21:02:38.672 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees/4 - 200 null application/json; charset=utf-8 158.2416ms

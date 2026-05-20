@@ -1,4 +1,6 @@
-﻿using EmployeeApi.Models;
+﻿using AutoMapper;
+using EmployeeApi.DTOs;
+using EmployeeApi.Models;
 using EmployeeApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,20 +14,27 @@ namespace EmployeeApi.Controllers
     {
         private readonly IEmployeeService _service;
         private readonly ILogger<EmployeesController> _logger;
+        private readonly IMapper _mapper;
 
         public EmployeesController(
-            IEmployeeService service,
-            ILogger<EmployeesController> logger)
+      IEmployeeService service,
+      ILogger<EmployeesController> logger,
+      IMapper mapper)
         {
             _service = service;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             _logger.LogInformation("GetAll called");
-            return Ok(await _service.GetAll());
+            var employees = await _service.GetAll();
+            var result =
+                _mapper.Map<List<EmployeeReadDto>>(employees);
+
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
@@ -40,9 +49,13 @@ namespace EmployeeApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Employee emp)
+        public async Task<IActionResult> Create(EmployeeCreateDto dto)
         {
-            await _service.Create(emp);
+            var employee =
+                _mapper.Map<Employee>(dto);
+
+            await _service.Create(employee);
+
             return Ok("Created");
         }
 

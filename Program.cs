@@ -2,6 +2,7 @@ using System.Text;
 using EmployeeApi.Data;
 using EmployeeApi.Interfaces;
 using EmployeeApi.Middleware;
+using EmployeeApi.Profiles;
 using EmployeeApi.Repositories;
 using EmployeeApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -9,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
@@ -113,7 +113,7 @@ builder.Services.AddApiVersioning(options =>
 });
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
 
