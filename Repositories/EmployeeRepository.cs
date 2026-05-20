@@ -1,5 +1,4 @@
-﻿
-using EmployeeApi.Data;
+﻿using EmployeeApi.Data;
 using EmployeeApi.Interfaces;
 using EmployeeApi.Models;
 using Microsoft.EntityFrameworkCore;

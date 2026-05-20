@@ -1,0 +1,106 @@
+2026-05-20 19:44:57.766 +05:30 [INF] Jwt Key: THIS_IS_MY_SUPER_SECRET_KEY_123456789
+2026-05-20 19:44:57.805 +05:30 [INF] Jwt Issuer: EmployeeApi
+2026-05-20 19:44:57.806 +05:30 [INF] Jwt Audience: EmployeeApiUsers
+2026-05-20 19:44:58.101 +05:30 [INF] User profile is available. Using 'C:\Users\narah\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-05-20 19:44:58.329 +05:30 [INF] Now listening on: https://localhost:7026
+2026-05-20 19:44:58.330 +05:30 [INF] Now listening on: http://localhost:5038
+2026-05-20 19:44:58.380 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-05-20 19:44:58.388 +05:30 [INF] Hosting environment: Development
+2026-05-20 19:44:58.389 +05:30 [INF] Content root path: C:\Hari\Dotnet\Sample Codes\EmployeeApi
+2026-05-20 19:44:59.349 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/swagger/index.html - null null
+2026-05-20 19:44:59.679 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/_framework/aspnetcore-browser-refresh.js - null null
+2026-05-20 19:44:59.681 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/_vs/browserLink - null null
+2026-05-20 19:44:59.686 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/swagger/index.html - 200 null text/html;charset=utf-8 346.7383ms
+2026-05-20 19:44:59.704 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/_framework/aspnetcore-browser-refresh.js - 200 14927 application/javascript; charset=utf-8 24.8226ms
+2026-05-20 19:44:59.776 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/_vs/browserLink - 200 null text/javascript; charset=UTF-8 94.5433ms
+2026-05-20 19:44:59.810 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/swagger/v1/swagger.json - null null
+2026-05-20 19:44:59.828 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 18.5499ms
+2026-05-20 19:45:15.527 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7026/api/Auth/login - application/json 51
+2026-05-20 19:45:15.636 +05:30 [INF] CORS policy execution successful.
+2026-05-20 19:45:15.739 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.AuthController.Login (EmployeeApi)'
+2026-05-20 19:45:15.789 +05:30 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(EmployeeApi.DTOs.LoginDto) on controller EmployeeApi.Controllers.AuthController (EmployeeApi).
+2026-05-20 19:45:18.854 +05:30 [INF] Executed DbCommand (91ms) [Parameters=[@__login_Username_0='?' (Size = 4000), @__login_Password_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[Password], [u].[Role], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__login_Username_0 AND [u].[Password] = @__login_Password_1
+2026-05-20 19:45:19.070 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-20 19:45:19.095 +05:30 [INF] Executed action EmployeeApi.Controllers.AuthController.Login (EmployeeApi) in 3292.5884ms
+2026-05-20 19:45:19.097 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.AuthController.Login (EmployeeApi)'
+2026-05-20 19:45:19.114 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7026/api/Auth/login - 200 null application/json; charset=utf-8 3587.3624ms
+2026-05-20 19:45:36.181 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7026/api/Auth/login - application/json 52
+2026-05-20 19:45:36.193 +05:30 [INF] CORS policy execution successful.
+2026-05-20 19:45:36.196 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.AuthController.Login (EmployeeApi)'
+2026-05-20 19:45:36.199 +05:30 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(EmployeeApi.DTOs.LoginDto) on controller EmployeeApi.Controllers.AuthController (EmployeeApi).
+2026-05-20 19:45:36.273 +05:30 [INF] Executed DbCommand (33ms) [Parameters=[@__login_Username_0='?' (Size = 4000), @__login_Password_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[Password], [u].[Role], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__login_Username_0 AND [u].[Password] = @__login_Password_1
+2026-05-20 19:45:36.280 +05:30 [INF] Executing UnauthorizedObjectResult, writing value of type 'System.String'.
+2026-05-20 19:45:36.284 +05:30 [INF] Executed action EmployeeApi.Controllers.AuthController.Login (EmployeeApi) in 80.2063ms
+2026-05-20 19:45:36.287 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.AuthController.Login (EmployeeApi)'
+2026-05-20 19:45:36.290 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7026/api/Auth/login - 401 null text/plain; charset=utf-8 109.4567ms
+2026-05-20 19:45:41.987 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7026/api/Auth/login - application/json 51
+2026-05-20 19:45:42.000 +05:30 [INF] CORS policy execution successful.
+2026-05-20 19:45:42.012 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.AuthController.Login (EmployeeApi)'
+2026-05-20 19:45:42.016 +05:30 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(EmployeeApi.DTOs.LoginDto) on controller EmployeeApi.Controllers.AuthController (EmployeeApi).
+2026-05-20 19:45:42.225 +05:30 [INF] Executed DbCommand (36ms) [Parameters=[@__login_Username_0='?' (Size = 4000), @__login_Password_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[Password], [u].[Role], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__login_Username_0 AND [u].[Password] = @__login_Password_1
+2026-05-20 19:45:42.233 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-20 19:45:42.244 +05:30 [INF] Executed action EmployeeApi.Controllers.AuthController.Login (EmployeeApi) in 222.443ms
+2026-05-20 19:45:42.248 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.AuthController.Login (EmployeeApi)'
+2026-05-20 19:45:42.250 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7026/api/Auth/login - 200 null application/json; charset=utf-8 263.1288ms
+2026-05-20 19:47:08.590 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/api/Employees - null null
+2026-05-20 19:47:08.634 +05:30 [INF] Failed to validate the token.
+System.ArgumentException: IDX14102: Unable to decode the header '[Security Artifact of type 'Microsoft.IdentityModel.Logging.SecurityArtifact' is hidden. For more details, see https://aka.ms/IdentityModel/SecurityArtifactLogging.]' as Base64Url encoded string.
+ ---> System.FormatException: IDX10400: Unable to decode: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9' as Base64url encoded string.
+   at Microsoft.IdentityModel.Tokens.Base64UrlEncoder.Decode(ReadOnlySpan`1 strSpan, Span`1 output, Boolean needReplace, Int32 decodedLength)
+   at Microsoft.IdentityModel.Tokens.Base64UrlEncoder.Decode(ReadOnlySpan`1 strSpan, Span`1 output)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.CreateClaimSet(ReadOnlySpan`1 strSpan, Int32 startIndex, Int32 length, Boolean createHeaderClaimSet)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(ReadOnlyMemory`1 encodedTokenMemory)
+   --- End of inner exception stack trace ---
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(ReadOnlyMemory`1 encodedTokenMemory)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+2026-05-20 19:47:08.668 +05:30 [INF] Bearer was not authenticated. Failure message: IDX14102: Unable to decode the header '[Security Artifact of type 'Microsoft.IdentityModel.Logging.SecurityArtifact' is hidden. For more details, see https://aka.ms/IdentityModel/SecurityArtifactLogging.]' as Base64Url encoded string.
+2026-05-20 19:47:08.685 +05:30 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2026-05-20 19:47:08.699 +05:30 [INF] AuthenticationScheme: Bearer was challenged.
+2026-05-20 19:47:08.702 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees - 401 0 null 111.6835ms
+2026-05-20 19:51:00.484 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/api/Employees - null null
+2026-05-20 19:51:00.597 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-20 19:51:00.620 +05:30 [INF] Route matched with {action = "GetAll", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-20 19:51:00.631 +05:30 [INF] GetAll called
+2026-05-20 19:51:00.768 +05:30 [INF] Executed DbCommand (71ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[Department], [e].[Name], [e].[Salary]
+FROM [Employees] AS [e]
+2026-05-20 19:51:00.834 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[EmployeeApi.Models.Employee, EmployeeApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-05-20 19:51:00.855 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi) in 230.9869ms
+2026-05-20 19:51:00.859 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-20 19:51:00.865 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees - 200 null application/json; charset=utf-8 381.4272ms
+2026-05-20 19:53:45.390 +05:30 [INF] Request starting HTTP/2 PUT https://localhost:7026/api/Employees - application/json 63
+2026-05-20 19:53:45.400 +05:30 [INF] CORS policy execution successful.
+2026-05-20 19:53:45.408 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.Update (EmployeeApi)'
+2026-05-20 19:53:45.430 +05:30 [INF] Route matched with {action = "Update", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Update(EmployeeApi.Models.Employee) on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-20 19:53:45.772 +05:30 [INF] Executed DbCommand (72ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (Size = 4000), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Employees] ([Department], [Name], [Salary])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2);
+2026-05-20 19:53:45.840 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2026-05-20 19:53:45.842 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.Update (EmployeeApi) in 408.0391ms
+2026-05-20 19:53:45.846 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.Update (EmployeeApi)'
+2026-05-20 19:53:45.847 +05:30 [INF] Request finished HTTP/2 PUT https://localhost:7026/api/Employees - 200 null text/plain; charset=utf-8 457.7919ms
+2026-05-20 19:53:55.417 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/api/Employees - null null
+2026-05-20 19:53:55.433 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-20 19:53:55.435 +05:30 [INF] Route matched with {action = "GetAll", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-20 19:53:55.442 +05:30 [INF] GetAll called
+2026-05-20 19:53:55.477 +05:30 [INF] Executed DbCommand (29ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[Department], [e].[Name], [e].[Salary]
+FROM [Employees] AS [e]
+2026-05-20 19:53:55.482 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[EmployeeApi.Models.Employee, EmployeeApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-05-20 19:53:55.485 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi) in 46.9879ms
+2026-05-20 19:53:55.489 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-20 19:53:55.492 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees - 200 null application/json; charset=utf-8 73.8844ms

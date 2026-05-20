@@ -1,5 +1,5 @@
-﻿using EmployeeApi.Interfaces;
-using EmployeeApi.Models;
+﻿using EmployeeApi.Models;
+using EmployeeApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,108 +10,54 @@ namespace EmployeeApi.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
-        private readonly IEmployeeRepository _employeeRepo;
+        private readonly IEmployeeService _service;
         private readonly ILogger<EmployeesController> _logger;
 
         public EmployeesController(
-            IEmployeeRepository employeeRepo,
+            IEmployeeService service,
             ILogger<EmployeesController> logger)
         {
-            _employeeRepo = employeeRepo;
+            _service = service;
             _logger = logger;
         }
 
-        // GET: api/employees
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            _logger.LogInformation("GetAll Employees API called");
-
-            var employees = await _employeeRepo.GetAllAsync();
-
-            _logger.LogInformation("GetAll Employees returned {Count} records", employees.Count);
-
-            return Ok(employees);
+            _logger.LogInformation("GetAll called");
+            return Ok(await _service.GetAll());
         }
 
-        // GET: api/employees/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            _logger.LogInformation("GetById called with ID: {Id}", id);
+            var emp = await _service.GetById(id);
 
-            var employee = await _employeeRepo.GetByIdAsync(id);
+            if (emp == null)
+                return NotFound();
 
-            if (employee == null)
-            {
-                _logger.LogWarning("Employee not found with ID: {Id}", id);
-                return NotFound($"Employee with ID {id} not found");
-            }
-
-            return Ok(employee);
+            return Ok(emp);
         }
 
-        // POST: api/employees
         [HttpPost]
-        public async Task<IActionResult> Create(Employee employee)
+        public async Task<IActionResult> Create(Employee emp)
         {
-            if (employee == null)
-            {
-                _logger.LogWarning("Create Employee called with null data");
-                return BadRequest("Invalid employee data");
-            }
-
-            await _employeeRepo.AddAsync(employee);
-
-            _logger.LogInformation("Employee created successfully with Name: {Name}", employee.Name);
-
-            return Ok("Employee created successfully");
+            await _service.Create(emp);
+            return Ok("Created");
         }
 
-        // PUT: api/employees/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Employee employee)
+        [HttpPut]
+        public async Task<IActionResult> Update(Employee emp)
         {
-            if (id != employee.Id)
-            {
-                _logger.LogWarning("Update ID mismatch. RouteId: {RouteId}, BodyId: {BodyId}", id, employee.Id);
-                return BadRequest("ID mismatch");
-            }
-
-            var existing = await _employeeRepo.GetByIdAsync(id);
-
-            if (existing == null)
-            {
-                _logger.LogWarning("Update failed. Employee not found with ID: {Id}", id);
-                return NotFound($"Employee with ID {id} not found");
-            }
-
-            await _employeeRepo.UpdateAsync(employee);
-
-            _logger.LogInformation("Employee updated successfully with ID: {Id}", id);
-
-            return Ok("Employee updated successfully");
+            await _service.Update(emp);
+            return Ok("Updated");
         }
 
-        // DELETE: api/employees/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            _logger.LogInformation("Delete Employee called with ID: {Id}", id);
-
-            var existing = await _employeeRepo.GetByIdAsync(id);
-
-            if (existing == null)
-            {
-                _logger.LogWarning("Delete failed. Employee not found with ID: {Id}", id);
-                return NotFound($"Employee with ID {id} not found");
-            }
-
-            await _employeeRepo.DeleteAsync(id);
-
-            _logger.LogInformation("Employee deleted successfully with ID: {Id}", id);
-
-            return Ok("Employee deleted successfully");
+            await _service.Delete(id);
+            return Ok("Deleted");
         }
     }
 }
