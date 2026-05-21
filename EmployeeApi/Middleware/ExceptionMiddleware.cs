@@ -1,5 +1,6 @@
 ﻿using System.Net;
-using System.Text.Json;
+using EmployeeApi.Responses;
+
 
 namespace EmployeeApi.Middleware
 {
@@ -8,13 +9,15 @@ namespace EmployeeApi.Middleware
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionMiddleware> _logger;
 
-        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+        public ExceptionMiddleware(
+            RequestDelegate next,
+            ILogger<ExceptionMiddleware> logger)
         {
             _next = next;
             _logger = logger;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task Invoke(HttpContext context)
         {
             try
             {
@@ -22,28 +25,20 @@ namespace EmployeeApi.Middleware
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unhandled exception occurred");
+                _logger.LogError(ex, "Unhandled exception");
 
-                await HandleExceptionAsync(context, ex);
+                context.Response.ContentType = "application/json";
+                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+                var response = new ApiResponse<string>
+                {
+                    Success = false,
+                    Message = ex.Message,
+                    Data = null
+                };
+
+                await context.Response.WriteAsJsonAsync(response);
             }
-        }
-
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
-        {
-            context.Response.ContentType = "application/json";
-
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-
-            var response = new
-            {
-                StatusCode = context.Response.StatusCode,
-                Message = "Internal Server Error",
-                Detail = exception.Message
-            };
-
-            var jsonResponse = JsonSerializer.Serialize(response);
-
-            return context.Response.WriteAsync(jsonResponse);
         }
     }
 }

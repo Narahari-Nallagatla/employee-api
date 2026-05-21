@@ -5,6 +5,7 @@ using EmployeeApi.Helpers;
 using EmployeeApi.Interfaces;
 using EmployeeApi.Models;
 using EmployeeApi.Responses;
+using EmployeeApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +29,9 @@ namespace EmployeeApi.Controllers
 
         private readonly IDistributedCache _cache;
 
-        public EmployeesController(IEmployeeService service, IMapper mapper, ILogger<EmployeesController> logger, IDistributedCache cache)
+        private readonly CacheService _cacheService;
+
+        public EmployeesController(IEmployeeService service, IMapper mapper, ILogger<EmployeesController> logger, IDistributedCache cache, CacheService cacheService)
         {
             _service = service;
 
@@ -37,6 +40,8 @@ namespace EmployeeApi.Controllers
             _logger = logger;
 
             _cache = cache;
+
+            _cacheService = cacheService;
         }
 
         [HttpGet]
@@ -47,17 +52,25 @@ namespace EmployeeApi.Controllers
                 var version = await _cache.GetStringAsync("employees_version") ?? "1";
 
                 var cacheKey = $"employees_v{version}_" + $"{pagination.PageNumber}_" + $"{pagination.PageSize}";
+                var cacheData = await _cacheService.GetAsync<PagedResponse<List<EmployeeReadDto>>>(cacheKey);
 
-                var cacheData = await _cache.GetStringAsync(cacheKey);
+                //var cacheData = await _cache.GetStringAsync(cacheKey);
 
-                if (!string.IsNullOrEmpty(cacheData))
+                //if (!string.IsNullOrEmpty(cacheData))
+                //{
+                //    _logger.LogInformation("Employees loaded from Redis cache");
+
+                //    var cachedResult = JsonSerializer.Deserialize<PagedResponse<List<EmployeeReadDto>>>(cacheData);
+
+                //    return Ok(cachedResult);
+                //}
+
+                if (cacheData != null)
                 {
                     _logger.LogInformation("Employees loaded from Redis cache");
-
-                    var cachedResult = JsonSerializer.Deserialize<PagedResponse<List<EmployeeReadDto>>>(cacheData);
-
-                    return Ok(cachedResult);
+                    return Ok(cacheData);
                 }
+
 
                 _logger.LogInformation("Employees loaded from Database");
 
@@ -86,11 +99,12 @@ namespace EmployeeApi.Controllers
                     Data = result
                 };
 
-                await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(response),
-                    new DistributedCacheEntryOptions
-                    {
-                        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
-                    });
+                //await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(response),
+                //    new DistributedCacheEntryOptions
+                //    {
+                //        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
+                //    });
+                await _cacheService.SetAsync(cacheKey, response, TimeSpan.FromMinutes(5));
 
                 return Ok(response);
             }
@@ -132,19 +146,25 @@ namespace EmployeeApi.Controllers
         {
             var cacheKey = $"employee_{id}";
 
-            var cacheData = await _cache.GetStringAsync(cacheKey);
+            //  var cacheData = await _cache.GetStringAsync(cacheKey);
+            var cacheData = await _cacheService.GetAsync<ApiResponse<EmployeeReadDto>>(cacheKey);
 
-            if (!string.IsNullOrEmpty(cacheData))
+
+            //if (!string.IsNullOrEmpty(cacheData))
+            //{
+            //    _logger.LogInformation("Employee loaded from Redis cache");
+
+            //    var cachedEmployee = JsonSerializer.Deserialize<ApiResponse<EmployeeReadDto>>(cacheData);
+
+            //    return Ok(cachedEmployee);
+            //}
+            if (cacheData != null)
             {
-                _logger.LogInformation("Employee loaded from Redis cache");
-
-                var cachedEmployee = JsonSerializer.Deserialize<ApiResponse<EmployeeReadDto>>(cacheData);
-
-                return Ok(cachedEmployee);
+                _logger.LogInformation("Employee loaded from cache");
+                return Ok(cacheData);
             }
 
-            var employee =
-                await _service.GetById(id);
+            var employee = await _service.GetById(id);
 
             if (employee == null)
             {
@@ -170,12 +190,12 @@ namespace EmployeeApi.Controllers
                 Data = result
             };
 
-            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(response),
-                new DistributedCacheEntryOptions
-                {
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
-                });
-
+            //await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(response),
+            //    new DistributedCacheEntryOptions
+            //    {
+            //        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
+            //    });
+            await _cacheService.SetAsync(cacheKey, response, TimeSpan.FromMinutes(5));
             return Ok(response);
         }
 

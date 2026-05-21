@@ -7,6 +7,7 @@ using EmployeeApi.Middleware;
 using EmployeeApi.Profiles;
 using EmployeeApi.Repositories;
 using EmployeeApi.Services;
+using EmployeeApi.Telemetry;
 using EmployeeApi.Validators;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -17,8 +18,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Polly;
 using Serilog;
 using Serilog.Core;
+using StackExchange.Redis;
 
 IdentityModelEventSource.ShowPII = true;
 // Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build()).CreateLogger();
@@ -33,10 +36,10 @@ if (!string.IsNullOrEmpty(keyVaultUrl))
     builder.Configuration.AddAzureKeyVault(new Uri(keyVaultUrl), new DefaultAzureCredential());
 }
 
-foreach (var item in builder.Configuration.AsEnumerable())
-{
-    Log.Information("{Key} = {Value}", item.Key, item.Value);
-}
+//foreach (var item in builder.Configuration.AsEnumerable())
+//{
+//    Log.Information("{Key} = {Value}", item.Key, item.Value);
+//}
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -52,6 +55,9 @@ Log.Information("Jwt Key: {Key}", builder.Configuration["Jwt:Key"]);
 Log.Information("Jwt Issuer: {Issuer}", builder.Configuration["Jwt:Issuer"]);
 
 Log.Information("Jwt Audience: {Audience}", builder.Configuration["Jwt:Audience"]);
+
+Log.Information($"REDIS VALUE = '{builder.Configuration["Redis:ConnectionString"]}'");
+
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 
@@ -135,7 +141,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddFluentValidationAutoValidation();
 
 builder.Services.AddValidatorsFromAssemblyContaining<EmployeeCreateDtoValidator>();
-builder.Services.AddHealthChecks().AddSqlServer(connectionString);
+builder.Services.AddHealthChecks().AddSqlServer(connectionString).AddRedis(builder.Configuration["Redis:ConnectionString"]);
 
 builder.Services.AddApplicationInsightsTelemetry(
     options =>
@@ -143,9 +149,42 @@ builder.Services.AddApplicationInsightsTelemetry(
         options.ConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"];
     });
 
+//builder.Services.AddStackExchangeRedisCache(options =>
+//{
+//   // options.Configuration = builder.Configuration["Redis:ConnectionString"];
+//    options.ConfigurationOptions = new ConfigurationOptions
+//    {
+//        AbortOnConnectFail = false,
+//        ConnectRetry = 5,
+//        ConnectTimeout = 5000
+//    };
+//});
+
+//builder.Services.AddStackExchangeRedisCache(options =>
+//{
+//    var redis = builder.Configuration.GetValue<string>("Redis:ConnectionString");
+
+//    if (string.IsNullOrWhiteSpace(redis))
+//        throw new Exception("Redis connection string is EMPTY");
+
+//    options.Configuration = redis;
+//});
+
 builder.Services.AddStackExchangeRedisCache(options =>
 {
-    options.Configuration = builder.Configuration["Redis:ConnectionString"];
+    var redis = builder.Configuration.GetValue<string>("Redis:ConnectionString");
+
+    if (string.IsNullOrWhiteSpace(redis))
+        throw new Exception("Redis connection string is EMPTY");
+
+    options.Configuration = redis;
+
+    options.ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions
+    {
+        AbortOnConnectFail = false,
+        ConnectRetry = 5,
+        ConnectTimeout = 5000
+    };
 });
 
 builder.Services.AddApiVersioning(options =>
@@ -173,6 +212,10 @@ builder.Services.AddRateLimiter(options =>
 
     options.RejectionStatusCode = 429;
 });
+builder.Services.AddSingleton<ITelemetryInitializer, CustomTelemetryInitializer>();
+builder.Services.AddHttpClient("default").AddTransientHttpErrorPolicy(policy => policy.WaitAndRetryAsync(3, retry => TimeSpan.FromSeconds(Math.Pow(2, retry))));
+builder.Services.AddHttpClient("default").AddTransientHttpErrorPolicy(policy => policy.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+builder.Services.AddScoped<CacheService>();
 
 var app = builder.Build();
 
@@ -186,6 +229,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("AllowAll");
 app.UseMiddleware<ExceptionMiddleware>();
+app.UseMiddleware<CorrelationIdMiddleware>();
 app.UseAuthentication();
 app.UseRateLimiter();
 app.UseAuthorization();
