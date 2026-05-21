@@ -12,6 +12,7 @@ obj/
 
 # Logs
 *.log
+*.txt
 
 # OS files
 .DS_Store

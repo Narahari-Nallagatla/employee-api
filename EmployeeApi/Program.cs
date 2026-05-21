@@ -1,4 +1,5 @@
 using System.Text;
+using System.Threading.RateLimiting;
 using EmployeeApi.Data;
 using EmployeeApi.Interfaces;
 using EmployeeApi.Middleware;
@@ -10,12 +11,12 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
-
 
 IdentityModelEventSource.ShowPII = true;
 
@@ -137,6 +138,32 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = builder.Configuration["Redis:ConnectionString"];
 });
 
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new Asp.Versioning.ApiVersion(1, 0);
+
+    options.AssumeDefaultVersionWhenUnspecified = true;
+
+    options.ReportApiVersions = true;
+});
+
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddFixedWindowLimiter("fixed",
+        limiterOptions =>
+        {
+            limiterOptions.PermitLimit = 5;
+
+            limiterOptions.Window = TimeSpan.FromSeconds(30);
+
+            limiterOptions.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+
+            limiterOptions.QueueLimit = 2;
+        });
+
+    options.RejectionStatusCode = 429;
+});
+
 var app = builder.Build();
 
 //if (app.Environment.IsDevelopment())
@@ -150,6 +177,7 @@ app.UseRouting();
 app.UseCors("AllowAll");
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthentication();
+app.UseRateLimiter();
 app.UseAuthorization();
 app.MapHealthChecks("/health");
 app.MapControllers();

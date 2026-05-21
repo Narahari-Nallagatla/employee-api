@@ -8,13 +8,16 @@ using EmployeeApi.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace EmployeeApi.Controllers
 {
-    [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [Authorize]
+    [EnableRateLimiting("fixed")]
     public class EmployeesController : ControllerBase
     {
         private readonly IEmployeeService _service;

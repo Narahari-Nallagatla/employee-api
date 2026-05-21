@@ -8,9 +8,7 @@ namespace EmployeeApi.Middleware
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionMiddleware> _logger;
 
-        public ExceptionMiddleware(
-            RequestDelegate next,
-            ILogger<ExceptionMiddleware> logger)
+        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
         {
             _next = next;
             _logger = logger;
@@ -30,14 +28,11 @@ namespace EmployeeApi.Middleware
             }
         }
 
-        private static Task HandleExceptionAsync(
-            HttpContext context,
-            Exception exception)
+        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
 
-            context.Response.StatusCode =
-                (int)HttpStatusCode.InternalServerError;
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
             var response = new
             {
@@ -46,8 +41,7 @@ namespace EmployeeApi.Middleware
                 Detail = exception.Message
             };
 
-            var jsonResponse =
-                JsonSerializer.Serialize(response);
+            var jsonResponse = JsonSerializer.Serialize(response);
 
             return context.Response.WriteAsync(jsonResponse);
         }
