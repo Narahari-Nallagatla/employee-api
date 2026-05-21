@@ -132,6 +132,11 @@ builder.Services.AddApplicationInsightsTelemetry(
         options.ConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"];
     });
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration["Redis:ConnectionString"];
+});
+
 var app = builder.Build();
 
 //if (app.Environment.IsDevelopment())

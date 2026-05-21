@@ -1,13 +1,14 @@
-﻿using AutoMapper;
+﻿using System.Text.Json;
+using AutoMapper;
 using EmployeeApi.DTOs;
 using EmployeeApi.Helpers;
 using EmployeeApi.Interfaces;
 using EmployeeApi.Models;
 using EmployeeApi.Responses;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace EmployeeApi.Controllers
 {
@@ -17,53 +18,162 @@ namespace EmployeeApi.Controllers
     public class EmployeesController : ControllerBase
     {
         private readonly IEmployeeService _service;
-        private readonly ILogger<EmployeesController> _logger;
+
         private readonly IMapper _mapper;
 
-        public EmployeesController(IEmployeeService service, ILogger<EmployeesController> logger, IMapper mapper)
+        private readonly ILogger<EmployeesController> _logger;
+
+        private readonly IDistributedCache _cache;
+
+        public EmployeesController(IEmployeeService service, IMapper mapper, ILogger<EmployeesController> logger, IDistributedCache cache)
         {
             _service = service;
-            _logger = logger;
+
             _mapper = mapper;
+
+            _logger = logger;
+
+            _cache = cache;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] PaginationParams pagination)
         {
-            var employees = await _service.GetPaged(pagination.PageNumber, pagination.PageSize);
+            try
+            {
+                var version = await _cache.GetStringAsync("employees_version") ?? "1";
 
-            var totalRecords = await _service.GetCount();
+                var cacheKey = $"employees_v{version}_" + $"{pagination.PageNumber}_" + $"{pagination.PageSize}";
 
-            var totalPages = (int)Math.Ceiling(totalRecords / (double)pagination.PageSize);
+                var cacheData = await _cache.GetStringAsync(cacheKey);
+
+                if (!string.IsNullOrEmpty(cacheData))
+                {
+                    _logger.LogInformation("Employees loaded from Redis cache");
+
+                    var cachedResult = JsonSerializer.Deserialize<PagedResponse<List<EmployeeReadDto>>>(cacheData);
+
+                    return Ok(cachedResult);
+                }
+
+                _logger.LogInformation("Employees loaded from Database");
+
+                var employees = await _service.GetPaged(pagination.PageNumber, pagination.PageSize);
+
+                var totalRecords = await _service.GetCount();
+
+                var totalPages = (int)Math.Ceiling(totalRecords / (double)pagination.PageSize);
+
+                var result = _mapper.Map<List<EmployeeReadDto>>(employees);
+
+                var response = new PagedResponse<List<EmployeeReadDto>>
+                {
+                    Success = true,
+
+                    Message = "Employees fetched successfully",
+
+                    PageNumber = pagination.PageNumber,
+
+                    PageSize = pagination.PageSize,
+
+                    TotalRecords = totalRecords,
+
+                    TotalPages = totalPages,
+
+                    Data = result
+                };
+
+                await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(response),
+                    new DistributedCacheEntryOptions
+                    {
+                        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
+                    });
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching employees");
+
+                return StatusCode(500, new ApiResponse<string>
+                {
+                    Success = false,
+
+                    Message = "Internal server error",
+
+                    Data = null
+                });
+            }
+        }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> Search(string search, string sortBy = "name")
+        {
+            var employees = await _service.Search(search, sortBy);
 
             var result = _mapper.Map<List<EmployeeReadDto>>(employees);
 
-            return Ok(new PagedResponse<List<EmployeeReadDto>>
-            {
-                Success = true,
-                Message = "Employees fetched successfully",
+            return Ok(
+                new ApiResponse<List<EmployeeReadDto>>
+                {
+                    Success = true,
 
-                PageNumber = pagination.PageNumber,
+                    Message = "Employees fetched successfully",
 
-                PageSize = pagination.PageSize,
-
-                TotalRecords = totalRecords,
-
-                TotalPages = totalPages,
-
-                Data = result
-            });
+                    Data = result
+                });
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var emp = await _service.GetById(id);
+            var cacheKey = $"employee_{id}";
 
-            if (emp == null)
-                return NotFound();
+            var cacheData = await _cache.GetStringAsync(cacheKey);
 
-            return Ok(emp);
+            if (!string.IsNullOrEmpty(cacheData))
+            {
+                _logger.LogInformation("Employee loaded from Redis cache");
+
+                var cachedEmployee = JsonSerializer.Deserialize<ApiResponse<EmployeeReadDto>>(cacheData);
+
+                return Ok(cachedEmployee);
+            }
+
+            var employee =
+                await _service.GetById(id);
+
+            if (employee == null)
+            {
+                return NotFound(
+                    new ApiResponse<string>
+                    {
+                        Success = false,
+
+                        Message = "Employee not found",
+
+                        Data = null
+                    });
+            }
+
+            var result = _mapper.Map<EmployeeReadDto>(employee);
+
+            var response = new ApiResponse<EmployeeReadDto>
+            {
+                Success = true,
+
+                Message = "Employee fetched successfully",
+
+                Data = result
+            };
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(response),
+                new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
+                });
+
+            return Ok(response);
         }
 
         [HttpPost]
@@ -73,30 +183,57 @@ namespace EmployeeApi.Controllers
 
             await _service.Create(employee);
 
-            return Ok("Created");
+            await _cache.SetStringAsync("employees_version", DateTime.UtcNow.Ticks.ToString());
+
+            return Ok(
+                new ApiResponse<string>
+                {
+                    Success = true,
+
+                    Message = "Employee created successfully",
+
+                    Data = null
+                });
         }
 
         [HttpPut]
         public async Task<IActionResult> Update(Employee emp)
         {
             await _service.Update(emp);
-            return Ok("Updated");
+
+            await _cache.RemoveAsync($"employee_{emp.Id}");
+
+            await _cache.SetStringAsync("employees_version", DateTime.UtcNow.Ticks.ToString());
+
+            return Ok(
+                new ApiResponse<string>
+                {
+                    Success = true,
+
+                    Message = "Employee updated successfully",
+
+                    Data = null
+                });
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.Delete(id);
-            return Ok("Deleted");
-        }
 
-        [HttpGet("search")]
-        public async Task<IActionResult> Search(string search, string sortBy = "name")
-        {
-            var employees = await _service.Search(search, sortBy);
+            await _cache.RemoveAsync($"employee_{id}");
+
+            await _cache.SetStringAsync("employees_version", DateTime.UtcNow.Ticks.ToString());
 
             return Ok(
-                _mapper.Map<List<EmployeeReadDto>>(employees));
+                new ApiResponse<string>
+                {
+                    Success = true,
+
+                    Message = "Employee deleted successfully",
+
+                    Data = null
+                });
         }
 
         [HttpPatch("{id}")]
@@ -107,16 +244,22 @@ namespace EmployeeApi.Controllers
                 return BadRequest();
             }
 
-            var employee =
-                await _service.GetById(id);
+            var employee = await _service.GetById(id);
 
             if (employee == null)
             {
-                return NotFound();
+                return NotFound(
+                    new ApiResponse<string>
+                    {
+                        Success = false,
+
+                        Message = "Employee not found",
+
+                        Data = null
+                    });
             }
 
-            var employeeDto =
-                _mapper.Map<EmployeePatchDto>(employee);
+            var employeeDto = _mapper.Map<EmployeePatchDto>(employee);
 
             patchDoc.ApplyTo(employeeDto);
 
@@ -124,13 +267,19 @@ namespace EmployeeApi.Controllers
 
             await _service.Update(employee);
 
-            return Ok(new ApiResponse<string>
-            {
-                Success = true,
-                Message = "Employee updated successfully",
-                Data = null
-            });
-        }
+            await _cache.RemoveAsync($"employee_{id}");
 
+            await _cache.SetStringAsync("employees_version", DateTime.UtcNow.Ticks.ToString());
+
+            return Ok(
+                new ApiResponse<string>
+                {
+                    Success = true,
+
+                    Message = "Employee patched successfully",
+
+                    Data = null
+                });
+        }
     }
 }

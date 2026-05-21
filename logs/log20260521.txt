@@ -1,0 +1,250 @@
+2026-05-21 09:26:59.781 +05:30 [INF] Jwt Key: THIS_IS_MY_SUPER_SECRET_KEY_123456789
+2026-05-21 09:26:59.835 +05:30 [INF] Jwt Issuer: EmployeeApi
+2026-05-21 09:26:59.837 +05:30 [INF] Jwt Audience: EmployeeApiUsers
+2026-05-21 09:27:01.671 +05:30 [INF] User profile is available. Using 'C:\Users\narah\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-05-21 09:27:02.658 +05:30 [INF] Now listening on: https://localhost:7026
+2026-05-21 09:27:02.661 +05:30 [INF] Now listening on: http://localhost:5038
+2026-05-21 09:27:02.720 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-05-21 09:27:02.732 +05:30 [INF] Hosting environment: Development
+2026-05-21 09:27:02.736 +05:30 [INF] Content root path: C:\Hari\Dotnet\Sample Codes\EmployeeApi
+2026-05-21 09:27:03.970 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/swagger/index.html - null null
+2026-05-21 09:27:04.563 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/swagger/index.html - 200 null text/html;charset=utf-8 635.9456ms
+2026-05-21 09:27:04.603 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/swagger/swagger-ui-bundle.js - null null
+2026-05-21 09:27:04.603 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/_framework/aspnetcore-browser-refresh.js - null null
+2026-05-21 09:27:04.603 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/swagger/swagger-ui.css - null null
+2026-05-21 09:27:04.604 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/_vs/browserLink - null null
+2026-05-21 09:27:04.604 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/swagger/swagger-ui-standalone-preset.js - null null
+2026-05-21 09:27:04.635 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/_framework/aspnetcore-browser-refresh.js - 200 14927 application/javascript; charset=utf-8 31.8084ms
+2026-05-21 09:27:04.717 +05:30 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2026-05-21 09:27:04.717 +05:30 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2026-05-21 09:27:04.722 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/swagger/swagger-ui.css - 200 144929 text/css 119.3797ms
+2026-05-21 09:27:04.725 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/swagger/swagger-ui-standalone-preset.js - 200 312163 text/javascript 121.6246ms
+2026-05-21 09:27:04.729 +05:30 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2026-05-21 09:27:04.748 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/swagger/swagger-ui-bundle.js - 200 1061536 text/javascript 144.8059ms
+2026-05-21 09:27:04.834 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/_vs/browserLink - 200 null text/javascript; charset=UTF-8 230.9665ms
+2026-05-21 09:27:04.907 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/swagger/v1/swagger.json - null null
+2026-05-21 09:27:04.924 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 16.9244ms
+2026-05-21 09:27:22.438 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7026/api/Auth/login - application/json-patch+json 51
+2026-05-21 09:27:22.552 +05:30 [INF] CORS policy execution successful.
+2026-05-21 09:27:22.752 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.AuthController.Login (EmployeeApi)'
+2026-05-21 09:27:22.829 +05:30 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(EmployeeApi.DTOs.LoginDto) on controller EmployeeApi.Controllers.AuthController (EmployeeApi).
+2026-05-21 09:27:23.626 +05:30 [INF] Executing action method EmployeeApi.Controllers.AuthController.Login (EmployeeApi) - Validation state: "Valid"
+2026-05-21 09:27:27.793 +05:30 [INF] Executed DbCommand (258ms) [Parameters=[@__login_Username_0='?' (Size = 4000), @__login_Password_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[Password], [u].[Role], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__login_Username_0 AND [u].[Password] = @__login_Password_1
+2026-05-21 09:27:28.024 +05:30 [INF] Executed action method EmployeeApi.Controllers.AuthController.Login (EmployeeApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 4377.9638ms.
+2026-05-21 09:27:28.042 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-21 09:27:28.204 +05:30 [INF] Executed action EmployeeApi.Controllers.AuthController.Login (EmployeeApi) in 5351.4589ms
+2026-05-21 09:27:28.208 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.AuthController.Login (EmployeeApi)'
+2026-05-21 09:27:28.236 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7026/api/Auth/login - 200 364 application/json; charset=utf-8 5798.8095ms
+2026-05-21 09:27:54.816 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/api/Employees?PageNumber=1&PageSize=10 - null null
+2026-05-21 09:27:54.998 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-21 09:27:55.040 +05:30 [INF] Route matched with {action = "GetAll", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll(EmployeeApi.Helpers.PaginationParams) on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-21 09:27:55.426 +05:30 [INF] Executing action method EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi) - Validation state: "Valid"
+2026-05-21 09:27:56.325 +05:30 [INF] Employees loaded from Database
+2026-05-21 09:27:56.382 +05:30 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-05-21 09:27:56.385 +05:30 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-05-21 09:27:56.525 +05:30 [INF] Executed DbCommand (86ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[Department], [e].[Name], [e].[Salary]
+FROM [Employees] AS [e]
+ORDER BY (SELECT 1)
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2026-05-21 09:27:56.817 +05:30 [INF] Executed DbCommand (35ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Employees] AS [e]
+2026-05-21 09:27:56.930 +05:30 [INF] Executed action method EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1501.997ms.
+2026-05-21 09:27:56.938 +05:30 [INF] Executing OkObjectResult, writing value of type 'EmployeeApi.Responses.PagedResponse`1[[System.Collections.Generic.List`1[[EmployeeApi.DTOs.EmployeeReadDto, EmployeeApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-21 09:27:56.970 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi) in 1924.533ms
+2026-05-21 09:27:56.973 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-21 09:27:56.978 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees?PageNumber=1&PageSize=10 - 200 485 application/json; charset=utf-8 2195.3748ms
+2026-05-21 09:28:50.736 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/api/Employees?PageNumber=1&PageSize=10 - null null
+2026-05-21 09:28:50.753 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-21 09:28:50.755 +05:30 [INF] Route matched with {action = "GetAll", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll(EmployeeApi.Helpers.PaginationParams) on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-21 09:28:50.772 +05:30 [INF] Executing action method EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi) - Validation state: "Valid"
+2026-05-21 09:28:50.779 +05:30 [INF] Employees loaded from Redis cache
+2026-05-21 09:28:50.802 +05:30 [INF] Executed action method EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 27.8069ms.
+2026-05-21 09:28:50.805 +05:30 [INF] Executing OkObjectResult, writing value of type 'EmployeeApi.Responses.PagedResponse`1[[System.Collections.Generic.List`1[[EmployeeApi.DTOs.EmployeeReadDto, EmployeeApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-21 09:28:50.810 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi) in 51.9541ms
+2026-05-21 09:28:50.811 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-21 09:28:50.813 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees?PageNumber=1&PageSize=10 - 200 485 application/json; charset=utf-8 78.0855ms
+2026-05-21 09:29:57.080 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/api/Employees/search?sortBy=name - null null
+2026-05-21 09:29:57.096 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.Search (EmployeeApi)'
+2026-05-21 09:29:57.116 +05:30 [INF] Route matched with {action = "Search", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Search(System.String, System.String) on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-21 09:29:57.145 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-05-21 09:29:57.196 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.Search (EmployeeApi) in 77.1388ms
+2026-05-21 09:29:57.207 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.Search (EmployeeApi)'
+2026-05-21 09:29:57.209 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees/search?sortBy=name - 400 246 application/problem+json; charset=utf-8 129.6894ms
+2026-05-21 09:30:13.037 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/api/Employees/search?search=raj&sortBy=raj - null null
+2026-05-21 09:30:13.047 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.Search (EmployeeApi)'
+2026-05-21 09:30:13.052 +05:30 [INF] Route matched with {action = "Search", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Search(System.String, System.String) on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-21 09:30:13.056 +05:30 [INF] Executing action method EmployeeApi.Controllers.EmployeesController.Search (EmployeeApi) - Validation state: "Valid"
+2026-05-21 09:30:13.340 +05:30 [INF] Executed DbCommand (69ms) [Parameters=[@__search_0_contains='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[Department], [e].[Name], [e].[Salary]
+FROM [Employees] AS [e]
+WHERE [e].[Name] LIKE @__search_0_contains ESCAPE N'\'
+ORDER BY [e].[Name]
+2026-05-21 09:30:13.353 +05:30 [INF] Executed action method EmployeeApi.Controllers.EmployeesController.Search (EmployeeApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 295.4081ms.
+2026-05-21 09:30:13.357 +05:30 [INF] Executing OkObjectResult, writing value of type 'EmployeeApi.Responses.ApiResponse`1[[System.Collections.Generic.List`1[[EmployeeApi.DTOs.EmployeeReadDto, EmployeeApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-21 09:30:13.364 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.Search (EmployeeApi) in 310.0386ms
+2026-05-21 09:30:13.371 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.Search (EmployeeApi)'
+2026-05-21 09:30:13.373 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees/search?search=raj&sortBy=raj - 200 157 application/json; charset=utf-8 336.672ms
+2026-05-21 11:12:11.073 +05:30 [INF] Jwt Key: THIS_IS_MY_SUPER_SECRET_KEY_123456789
+2026-05-21 11:12:11.123 +05:30 [INF] Jwt Issuer: EmployeeApi
+2026-05-21 11:12:11.125 +05:30 [INF] Jwt Audience: EmployeeApiUsers
+2026-05-21 11:12:11.691 +05:30 [INF] User profile is available. Using 'C:\Users\narah\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-05-21 11:12:12.420 +05:30 [INF] Now listening on: https://localhost:7026
+2026-05-21 11:12:12.422 +05:30 [INF] Now listening on: http://localhost:5038
+2026-05-21 11:12:12.687 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-05-21 11:12:12.688 +05:30 [INF] Hosting environment: Development
+2026-05-21 11:12:12.690 +05:30 [INF] Content root path: C:\Hari\Dotnet\Sample Codes\EmployeeApi
+2026-05-21 11:12:13.288 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/swagger/index.html - null null
+2026-05-21 11:12:13.572 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/swagger/index.html - 200 null text/html;charset=utf-8 325.6225ms
+2026-05-21 11:12:13.574 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/_framework/aspnetcore-browser-refresh.js - null null
+2026-05-21 11:12:13.575 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/_vs/browserLink - null null
+2026-05-21 11:12:13.911 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/_framework/aspnetcore-browser-refresh.js - 200 14927 application/javascript; charset=utf-8 337.2209ms
+2026-05-21 11:12:13.958 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/_vs/browserLink - 200 null text/javascript; charset=UTF-8 384.4231ms
+2026-05-21 11:12:13.983 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/swagger/v1/swagger.json - null null
+2026-05-21 11:12:14.008 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 24.4518ms
+2026-05-21 11:14:36.478 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7026/api/Auth/login - application/json-patch+json 51
+2026-05-21 11:14:36.556 +05:30 [INF] CORS policy execution successful.
+2026-05-21 11:14:36.652 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.AuthController.Login (EmployeeApi)'
+2026-05-21 11:14:36.695 +05:30 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(EmployeeApi.DTOs.LoginDto) on controller EmployeeApi.Controllers.AuthController (EmployeeApi).
+2026-05-21 11:14:37.105 +05:30 [INF] Executing action method EmployeeApi.Controllers.AuthController.Login (EmployeeApi) - Validation state: "Valid"
+2026-05-21 11:14:39.131 +05:30 [INF] Executed DbCommand (124ms) [Parameters=[@__login_Username_0='?' (Size = 4000), @__login_Password_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[Password], [u].[Role], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__login_Username_0 AND [u].[Password] = @__login_Password_1
+2026-05-21 11:14:39.283 +05:30 [INF] Executed action method EmployeeApi.Controllers.AuthController.Login (EmployeeApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2169.9799ms.
+2026-05-21 11:14:39.296 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-21 11:14:39.350 +05:30 [INF] Executed action EmployeeApi.Controllers.AuthController.Login (EmployeeApi) in 2647.1578ms
+2026-05-21 11:14:39.353 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.AuthController.Login (EmployeeApi)'
+2026-05-21 11:14:39.365 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7026/api/Auth/login - 200 364 application/json; charset=utf-8 2886.6744ms
+2026-05-21 11:14:56.895 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/api/Employees?PageNumber=1&PageSize=10 - null null
+2026-05-21 11:14:56.993 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-21 11:14:57.012 +05:30 [INF] Route matched with {action = "GetAll", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll(EmployeeApi.Helpers.PaginationParams) on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-21 11:14:57.151 +05:30 [INF] Executing action method EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi) - Validation state: "Valid"
+2026-05-21 11:14:57.446 +05:30 [INF] Employees loaded from Database
+2026-05-21 11:14:57.500 +05:30 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-05-21 11:14:57.503 +05:30 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-05-21 11:14:57.598 +05:30 [INF] Executed DbCommand (59ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[Department], [e].[Name], [e].[Salary]
+FROM [Employees] AS [e]
+ORDER BY (SELECT 1)
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2026-05-21 11:14:57.774 +05:30 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Employees] AS [e]
+2026-05-21 11:14:57.832 +05:30 [INF] Executed action method EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 677.6161ms.
+2026-05-21 11:14:57.841 +05:30 [INF] Executing OkObjectResult, writing value of type 'EmployeeApi.Responses.PagedResponse`1[[System.Collections.Generic.List`1[[EmployeeApi.DTOs.EmployeeReadDto, EmployeeApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-21 11:14:57.870 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi) in 855.0673ms
+2026-05-21 11:14:57.874 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-21 11:14:57.877 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees?PageNumber=1&PageSize=10 - 200 485 application/json; charset=utf-8 983.4292ms
+2026-05-21 11:16:28.274 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7026/api/Employees - application/json-patch+json 69
+2026-05-21 11:16:28.286 +05:30 [INF] CORS policy execution successful.
+2026-05-21 11:16:28.292 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.Create (EmployeeApi)'
+2026-05-21 11:16:28.307 +05:30 [INF] Route matched with {action = "Create", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(EmployeeApi.DTOs.EmployeeCreateDto) on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-21 11:16:28.368 +05:30 [INF] Executing action method EmployeeApi.Controllers.EmployeesController.Create (EmployeeApi) - Validation state: "Valid"
+2026-05-21 11:16:28.690 +05:30 [INF] Executed DbCommand (48ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (Size = 4000), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Employees] ([Department], [Name], [Salary])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2);
+2026-05-21 11:16:28.735 +05:30 [INF] Executed action method EmployeeApi.Controllers.EmployeesController.Create (EmployeeApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 365.7851ms.
+2026-05-21 11:16:28.739 +05:30 [INF] Executing OkObjectResult, writing value of type 'EmployeeApi.Responses.ApiResponse`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-21 11:16:28.742 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.Create (EmployeeApi) in 433.2573ms
+2026-05-21 11:16:28.744 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.Create (EmployeeApi)'
+2026-05-21 11:16:28.745 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7026/api/Employees - 200 70 application/json; charset=utf-8 471.4262ms
+2026-05-21 11:16:32.332 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/api/Employees?PageNumber=1&PageSize=10 - null null
+2026-05-21 11:16:32.339 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-21 11:16:32.341 +05:30 [INF] Route matched with {action = "GetAll", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll(EmployeeApi.Helpers.PaginationParams) on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-21 11:16:32.347 +05:30 [INF] Executing action method EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi) - Validation state: "Valid"
+2026-05-21 11:16:32.355 +05:30 [INF] Employees loaded from Database
+2026-05-21 11:16:32.385 +05:30 [INF] Executed DbCommand (26ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[Department], [e].[Name], [e].[Salary]
+FROM [Employees] AS [e]
+ORDER BY (SELECT 1)
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2026-05-21 11:16:32.414 +05:30 [INF] Executed DbCommand (24ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Employees] AS [e]
+2026-05-21 11:16:32.424 +05:30 [INF] Executed action method EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 74.7546ms.
+2026-05-21 11:16:32.426 +05:30 [INF] Executing OkObjectResult, writing value of type 'EmployeeApi.Responses.PagedResponse`1[[System.Collections.Generic.List`1[[EmployeeApi.DTOs.EmployeeReadDto, EmployeeApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-21 11:16:32.429 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi) in 85.7444ms
+2026-05-21 11:16:32.430 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-21 11:16:32.432 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees?PageNumber=1&PageSize=10 - 200 534 application/json; charset=utf-8 99.4656ms
+2026-05-21 11:16:54.411 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/api/Employees?PageNumber=1&PageSize=10 - null null
+2026-05-21 11:16:54.424 +05:30 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2026-05-21 11:16:54.432 +05:30 [INF] AuthenticationScheme: Bearer was challenged.
+2026-05-21 11:16:54.434 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees?PageNumber=1&PageSize=10 - 401 null null 23.2438ms
+2026-05-21 11:17:15.482 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/api/Employees?PageNumber=1&PageSize=10 - null null
+2026-05-21 11:17:15.487 +05:30 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2026-05-21 11:17:15.489 +05:30 [INF] AuthenticationScheme: Bearer was challenged.
+2026-05-21 11:17:15.490 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees?PageNumber=1&PageSize=10 - 401 null null 8.8294ms
+2026-05-21 11:17:50.754 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/api/Employees?PageNumber=1&PageSize=10 - null null
+2026-05-21 11:17:50.759 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-21 11:17:50.761 +05:30 [INF] Route matched with {action = "GetAll", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll(EmployeeApi.Helpers.PaginationParams) on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-21 11:17:50.764 +05:30 [INF] Executing action method EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi) - Validation state: "Valid"
+2026-05-21 11:17:50.769 +05:30 [INF] Employees loaded from Redis cache
+2026-05-21 11:17:50.781 +05:30 [INF] Executed action method EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 16.2993ms.
+2026-05-21 11:17:50.782 +05:30 [INF] Executing OkObjectResult, writing value of type 'EmployeeApi.Responses.PagedResponse`1[[System.Collections.Generic.List`1[[EmployeeApi.DTOs.EmployeeReadDto, EmployeeApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-21 11:17:50.784 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi) in 20.8018ms
+2026-05-21 11:17:50.810 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.GetAll (EmployeeApi)'
+2026-05-21 11:17:50.811 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees?PageNumber=1&PageSize=10 - 200 534 application/json; charset=utf-8 57.5375ms
+2026-05-21 11:18:34.763 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/api/Employees/search?search=ra&sortBy=name - null null
+2026-05-21 11:18:34.775 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.Search (EmployeeApi)'
+2026-05-21 11:18:34.787 +05:30 [INF] Route matched with {action = "Search", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Search(System.String, System.String) on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-21 11:18:34.791 +05:30 [INF] Executing action method EmployeeApi.Controllers.EmployeesController.Search (EmployeeApi) - Validation state: "Valid"
+2026-05-21 11:18:34.866 +05:30 [INF] Executed DbCommand (26ms) [Parameters=[@__search_0_contains='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[Department], [e].[Name], [e].[Salary]
+FROM [Employees] AS [e]
+WHERE [e].[Name] LIKE @__search_0_contains ESCAPE N'\'
+ORDER BY [e].[Name]
+2026-05-21 11:18:34.873 +05:30 [INF] Executed action method EmployeeApi.Controllers.EmployeesController.Search (EmployeeApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 79.7588ms.
+2026-05-21 11:18:34.877 +05:30 [INF] Executing OkObjectResult, writing value of type 'EmployeeApi.Responses.ApiResponse`1[[System.Collections.Generic.List`1[[EmployeeApi.DTOs.EmployeeReadDto, EmployeeApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-21 11:18:34.881 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.Search (EmployeeApi) in 91.3444ms
+2026-05-21 11:18:34.882 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.Search (EmployeeApi)'
+2026-05-21 11:18:34.883 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees/search?search=ra&sortBy=name - 200 430 application/json; charset=utf-8 120.3859ms
+2026-05-21 11:18:57.920 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/api/Employees/search?search=4&sortBy=name - null null
+2026-05-21 11:18:57.924 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.Search (EmployeeApi)'
+2026-05-21 11:18:57.926 +05:30 [INF] Route matched with {action = "Search", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Search(System.String, System.String) on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-21 11:18:57.929 +05:30 [INF] Executing action method EmployeeApi.Controllers.EmployeesController.Search (EmployeeApi) - Validation state: "Valid"
+2026-05-21 11:18:57.961 +05:30 [INF] Executed DbCommand (25ms) [Parameters=[@__search_0_contains='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[Department], [e].[Name], [e].[Salary]
+FROM [Employees] AS [e]
+WHERE [e].[Name] LIKE @__search_0_contains ESCAPE N'\'
+ORDER BY [e].[Name]
+2026-05-21 11:18:57.965 +05:30 [INF] Executed action method EmployeeApi.Controllers.EmployeesController.Search (EmployeeApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 33.8266ms.
+2026-05-21 11:18:57.967 +05:30 [INF] Executing OkObjectResult, writing value of type 'EmployeeApi.Responses.ApiResponse`1[[System.Collections.Generic.List`1[[EmployeeApi.DTOs.EmployeeReadDto, EmployeeApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-21 11:18:57.969 +05:30 [INF] Executed action EmployeeApi.Controllers.EmployeesController.Search (EmployeeApi) in 41.3553ms
+2026-05-21 11:18:57.971 +05:30 [INF] Executed endpoint 'EmployeeApi.Controllers.EmployeesController.Search (EmployeeApi)'
+2026-05-21 11:18:57.973 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/api/Employees/search?search=4&sortBy=name - 200 69 application/json; charset=utf-8 53.3697ms
+2026-05-21 11:19:30.852 +05:30 [INF] Request starting HTTP/2 PATCH https://localhost:7026/api/Employees/3 - application/json-patch+json 121
+2026-05-21 11:19:30.855 +05:30 [INF] CORS policy execution successful.
+2026-05-21 11:19:30.857 +05:30 [INF] Executing endpoint 'EmployeeApi.Controllers.EmployeesController.PatchEmployee (EmployeeApi)'
+2026-05-21 11:19:30.871 +05:30 [INF] Route matched with {action = "PatchEmployee", controller = "Employees"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] PatchEmployee(Int32, Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1[EmployeeApi.DTOs.EmployeePatchDto]) on controller EmployeeApi.Controllers.EmployeesController (EmployeeApi).
+2026-05-21 11:19:30.918 +05:30 [INF] Executing action method EmployeeApi.Controllers.EmployeesController.PatchEmployee (EmployeeApi) - Validation state: "Valid"
+2026-05-21 11:19:30.984 +05:30 [INF] Executed DbCommand (25ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Department], [e].[Name], [e].[Salary]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @__p_0
+2026-05-21 11:20:58.047 +05:30 [INF] Jwt Key: THIS_IS_MY_SUPER_SECRET_KEY_123456789
+2026-05-21 11:20:58.089 +05:30 [INF] Jwt Issuer: EmployeeApi
+2026-05-21 11:20:58.091 +05:30 [INF] Jwt Audience: EmployeeApiUsers
+2026-05-21 11:20:58.491 +05:30 [INF] User profile is available. Using 'C:\Users\narah\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-05-21 11:20:58.979 +05:30 [INF] Now listening on: https://localhost:7026
+2026-05-21 11:20:58.980 +05:30 [INF] Now listening on: http://localhost:5038
+2026-05-21 11:20:59.126 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-05-21 11:20:59.128 +05:30 [INF] Hosting environment: Development
+2026-05-21 11:20:59.129 +05:30 [INF] Content root path: C:\Hari\Dotnet\Sample Codes\EmployeeApi
+2026-05-21 11:20:59.559 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/swagger/index.html - null null
+2026-05-21 11:20:59.685 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/swagger/index.html - 200 null text/html;charset=utf-8 142.0616ms
+2026-05-21 11:20:59.691 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/_framework/aspnetcore-browser-refresh.js - null null
+2026-05-21 11:20:59.693 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/_vs/browserLink - null null
+2026-05-21 11:20:59.700 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/_framework/aspnetcore-browser-refresh.js - 200 14927 application/javascript; charset=utf-8 9.2459ms
+2026-05-21 11:20:59.729 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/_vs/browserLink - 200 null text/javascript; charset=UTF-8 38.3015ms
+2026-05-21 11:20:59.753 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7026/swagger/v1/swagger.json - null null
+2026-05-21 11:20:59.764 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7026/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 11.6769ms
