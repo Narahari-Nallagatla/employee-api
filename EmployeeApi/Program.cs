@@ -1,5 +1,6 @@
 using System.Text;
 using System.Threading.RateLimiting;
+using Azure.Identity;
 using EmployeeApi.Data;
 using EmployeeApi.Interfaces;
 using EmployeeApi.Middleware;
@@ -17,21 +18,32 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using Serilog.Core;
 
 IdentityModelEventSource.ShowPII = true;
+// Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build()).CreateLogger();
+
 
 var builder = WebApplication.CreateBuilder(args);
+Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();
+var keyVaultUrl = builder.Configuration["KeyVault:VaultUrl"];
+
+if (!string.IsNullOrEmpty(keyVaultUrl))
+{
+    builder.Configuration.AddAzureKeyVault(new Uri(keyVaultUrl), new DefaultAzureCredential());
+}
+
+foreach (var item in builder.Configuration.AsEnumerable())
+{
+    Log.Information("{Key} = {Value}", item.Key, item.Value);
+}
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
 if (string.IsNullOrEmpty(connectionString))
 {
     throw new Exception("DefaultConnection is missing");
 }
-
-
-Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console()
-    .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
-    .CreateLogger();
 
 builder.Host.UseSerilog();
 
@@ -90,7 +102,6 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(conn
 
 builder.Services.AddScoped<BlobService>();
 
-
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 .AddJwtBearer(options =>
 {
@@ -100,14 +111,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
-
 
 
 builder.Services.AddApiVersioning(options =>
@@ -119,6 +128,7 @@ builder.Services.AddApiVersioning(options =>
 
     options.ReportApiVersions = true;
 });
+
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
@@ -171,7 +181,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 // }
-
+app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("AllowAll");
@@ -181,5 +191,4 @@ app.UseRateLimiter();
 app.UseAuthorization();
 app.MapHealthChecks("/health");
 app.MapControllers();
-
 app.Run();

@@ -22,7 +22,7 @@ namespace EmployeeApi.Middleware
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, "Unhandled exception occurred");
 
                 await HandleExceptionAsync(context, ex);
             }
